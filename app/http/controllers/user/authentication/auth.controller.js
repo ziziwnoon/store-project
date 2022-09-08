@@ -3,7 +3,7 @@ const Controller = require("../../controller");
 const createError = require("http-errors");
 const { randomNumberGenerator, signJwtToken, verifyRefreshToken, signRefreshJwtToken } = require("../../../../utils/functions");
 const { UserModel } = require("../../../../models/users");
-const { EXPIRES_IN, USER_ROLE } = require("../../../../utils/constants");
+const { ROLE } = require("../../../../utils/constants");
 class UserAuthController extends Controller {
     async getOtp(req,res,next){
         try {
@@ -75,7 +75,7 @@ class UserAuthController extends Controller {
             return (await this.updateUser(mobile , {otp}))
         }
         return !!(await UserModel.create({
-            mobile , otp , role : [USER_ROLE]
+            mobile , otp , role : [ROLE.USER]
         }))
     }
 
@@ -91,6 +91,8 @@ class UserAuthController extends Controller {
         const updateResult = await UserModel.updateOne({mobile} , {$set : objectData})
         return !!updateResult.modifiedCount
     }
+
+    
 
    
 }
