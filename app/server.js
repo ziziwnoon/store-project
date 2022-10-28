@@ -36,6 +36,7 @@ module.exports = class Application{
         this.#app.use("/api-doc" , swaggerUI.serve , swaggerUI.setup(
             swaggerJsDoc({
                 swaggerDefinition : {
+                    openapi : "3.0.0" ,
                     info : {
                         title : "Zeinab Store",
                         version : "1.0.0",
@@ -45,13 +46,29 @@ module.exports = class Application{
                             url : "zeinab.com",
                             email : "zeinab.naderi001@gmail.com"
                     },
-                    servers : {
-                        url : "http://localhost:5000"
+                   
+                },
+                servers : [
+                    {url : "http://localhost:5000"}
+                ]
+                    
+                 ,
+                components : {
+                    securitySchemes : {
+                        BearerAuth : {
+                            type : "http" ,
+                            scheme : "bearer" ,
+                            bearerFormat : "JWT"
+                        }
                     }
-                }
+                },
+                security : [{BearerAuth : []}]
             },
                 apis : ["./app/router/*/*.js"]
-            })
+            }) ,
+            {
+                explorer : true
+            }
         ))
     }
 

@@ -4,19 +4,38 @@ const router = require("express").Router();
 
 /**
  * @swagger
+ *  components:
+ *      schemas:
+ *          Category:
+ *              type: object
+ *              required:
+ *                  -   title
+ *              properties:
+ *                  title:
+ *                      type: string
+ *                      description: the title for adding a new category 
+ *                  parent:
+ *                      type: string
+ *                      description: the parent of category 
+ */
+
+
+/**
+ * @swagger
  *  /admin/category/add:
  *      post:
  *          summary: add category
  *          tags: [Category(AdminPanel)]
  *          description: add category
- *          parameters:
- *          -   in: formData
- *              name: title
+ *          requestBody:
  *              required: true
- *              type: string
- *          -   in: formData
- *              name: parent
- *              type: string
+ *              content:
+ *                  application/x-www-form-urlencoded:
+ *                      schema:
+ *                          $ref: "#/components/schemas/Category"
+ *                  application/json:
+ *                      schema:
+ *                          $ref: "#/components/schemas/Category"
  * 
  *          responses:
  *              200:
@@ -46,10 +65,10 @@ router.post("/add" , CategoryController.addCategory);
  *          tags: [Category(AdminPanel)]
  *          description: get children of parents
  *          parameters:
- *              -   in: path
- *                  name: parent
- *                  required: true
- *                  type: string
+ *             -   in: path
+ *                 name: parent
+ *                 required: true
+ *                 type: string
  *          responses:
  *              200:
  *                  description: success
@@ -77,10 +96,10 @@ router.get("/all" , CategoryController.getAllCategories);
  *          tags: [Category(AdminPanel)]
  *          description: delete category
  *          parameters:
- *              -   in: path
- *                  name: id
- *                  required: true
- *                  type: string
+ *            -   in: path
+ *                name: id
+ *                required: true
+ *                type: string
  *          responses:
  *              200:
  *                  description: success
@@ -109,10 +128,10 @@ router.delete("/delete/:id" , CategoryController.removeCategory);
  *          tags: [Category(AdminPanel)]
  *          description: get category by Id
  *          parameters:
- *              -   in: path
- *                  name: id
- *                  required: true
- *                  type: string
+ *            -   in: path
+ *                name: id
+ *                required: true
+ *                type: string
  *          responses:
  *              200:
  *                  description: success
@@ -126,15 +145,15 @@ router.delete("/delete/:id" , CategoryController.removeCategory);
  *          summary: update category title by Id
  *          tags: [Category(AdminPanel)]
  *          description: update category title by Id
- *          parameters:
- *              -   in: path
- *                  name: id
- *                  required: true
- *                  type: string
- *              -   in: formData
- *                  name: title
- *                  required: true
- *                  type: string
+ *          requestBody:
+ *              required: true
+ *              content:
+ *                  application/x-www-form-urlencoded:
+ *                      schema:
+ *                          $ref: "#/components/schemas/Category"
+ *                  application/json:
+ *                      schema:
+ *                          $ref: "#/components/schemas/Category"
  *          responses:
  *              200:
  *                  description: success

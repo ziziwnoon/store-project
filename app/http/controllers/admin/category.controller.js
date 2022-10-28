@@ -112,7 +112,7 @@ class CategoryController extends Controller{
 
     async removeCategory(req,res,next){
         const {id} = req.params;
-        const category = await this.checkExistingCategory(id);
+        await this.checkExistingCategory(id);
         const deletedCategory = await CategoryModel.deleteMany({$or : [
             {_id : id},
             {parent : id}
@@ -174,7 +174,7 @@ class CategoryController extends Controller{
     async updateCategoryTitle(req,res,next){
         const {id} = req.params;
         const {title} = req.body;
-        const category = await this.checkExistingCategory(id);
+        await this.checkExistingCategory(id);
         await updateCategorySchema.validateAsync(req.body)
         const updateResult = await CategoryModel.updateOne({_id : id}, {$set : {title}})
         if(updateResult.modifiedCount == 0) return createError.InternalServerError("ویرایش انجام نشد");
@@ -187,9 +187,14 @@ class CategoryController extends Controller{
     }
 
     async checkExistingCategory(id){
-        const category = await CategoryModel.findById(id);
-        if(!category) throw createError.NotFound("دسته بندی یافت نشد");
-        return category;
+        try {
+            const category = await CategoryModel.findById(id);
+            if(!category) throw createError.NotFound("دسته بندی یافت نشد");
+            return category;
+        } catch (error) {
+            next(error)
+        }
+        
         
     }
 }

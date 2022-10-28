@@ -1,3 +1,4 @@
+const { verifyAccesstoken, checkRole } = require("../http/middleweares/verifyAccessToken");
 const redisClient = require("../utils/init_redis");
 const { AdminRoutes } = require("./admin/admin");
 const { HomeRoutes } = require("./api");
@@ -13,7 +14,7 @@ const router = require("express").Router();
 
 router.use("/user" , UserAuthRoutes)
 router.use("/developer" , DeveloperRoutes)
-router.use("/admin" , AdminRoutes)
+router.use("/admin"  ,verifyAccesstoken, checkRole("ADMIN"), AdminRoutes)
 router.use("/" , HomeRoutes)
 
 

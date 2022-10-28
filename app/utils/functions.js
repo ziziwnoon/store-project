@@ -2,7 +2,9 @@ const JWT = require("jsonwebtoken");
 const { UserModel } = require("../models/users");
 const { ACCESS_TOKEN_SECTERT_KEY, REFRESH_TOKEN_SECTERT_KEY } = require("./constants");
 const createError = require("http-errors");
-const redisClient = require("./../utils/init_redis")
+const redisClient = require("./../utils/init_redis");
+const path = require("path");
+const fs = require("fs")
 function randomNumberGenerator(){
     return Math.floor((Math.random()*9000)+10000)
 }
@@ -14,7 +16,7 @@ function signJwtToken(userId){
             mobile : user.mobile
         }
         const options = {
-            expiresIn : "1h"
+            expiresIn : "1y"
         }
 
         JWT.sign(payload , ACCESS_TOKEN_SECTERT_KEY , options , (err , token)=>{
@@ -57,9 +59,17 @@ function verifyRefreshToken(token){
     })
     
 }
+
+function deleteFileInPublic(fileAddress){
+    if(fileAddress){
+       const directory = path.join(__dirname , ".." , ".." , "public" , fileAddress)
+       if(fs.existsSync(directory)) fs.unlinkSync(directory) 
+    } 
+}
 module.exports = {
     randomNumberGenerator,
     signJwtToken,
     signRefreshJwtToken,
-    verifyRefreshToken
+    verifyRefreshToken,
+    deleteFileInPublic
 }

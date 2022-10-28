@@ -4,6 +4,39 @@ const router = require("express").Router();
 
 /**
  * @swagger
+ *  components:
+ *      schemas:
+ *          GetOTP:
+ *              type: object
+ *              required:
+ *                  -   mobile
+ *              properties:
+ *                  mobile:
+ *                      type: string
+ *                      description: the user's mobile for sign up or sign in
+ *          CheckOTP:
+ *              type: object
+ *              required:
+ *                  -   mobile
+ *                  -   code
+ *              properties:
+ *                  mobile:
+ *                      type: string
+ *                      description: the user's mobile for sign up or sign in
+ *                  code:
+ *                      type: integer
+ *                      description: the user's code for getting access token
+ *          RefreshToken:
+ *              type: object
+ *              required:
+ *                  -   refreshToken
+ *              properties:
+ *                  refreshToken:
+ *                      type: string
+ *                      description: the user's refresh token for getting a new refresh token
+ */
+/**
+ * @swagger
  * tags:
  *  name: Authorization
  *  description : Login Page with one time password
@@ -15,13 +48,15 @@ const router = require("express").Router();
  *          summary: get one time password
  *          tags: [Authorization]
  *          description: get one time password
- *          parameters:
- *          -   name: mobile
- *              description: fa-IRI phonenumber
- *              in: formData
+ *          requestBody:
  *              required: true
- *              type: string
- * 
+ *              content:
+ *                  application/x-www-form-urlencoded:
+ *                      schema:
+ *                          $ref: "#/components/schemas/GetOTP"
+ *                  application/json:
+ *                      schema:
+ *                          $ref: "#/components/schemas/GetOTP"
  *          responses:
  *              201:
  *                  description: success
@@ -42,17 +77,15 @@ router.post("/get-otp" , UserAuthController.getOtp);
  *          summary: check one time password
  *          tags: [Authorization]
  *          description: check one time password
- *          parameters:
- *          -   name: mobile
- *              description: fa-IRI phonenumber
- *              in: formData
+ *          requestBody:
  *              required: true
- *              type: string
- *          -   name: code
- *              description: one time code
- *              in: formData
- *              required: true
- *              type: string
+ *              content:
+ *                  application/x-www-form-urlencoded:
+ *                      schema:
+ *                          $ref: "#/components/schemas/CheckOTP"
+ *                  application/json:
+ *                      schema:
+ *                          $ref: "#/components/schemas/CheckOTP"
  * 
  *          responses:
  *              201:
@@ -73,12 +106,15 @@ router.post("/check-otp" , UserAuthController.checkOtp);
  *          summary: refresh token
  *          tags: [Authorization]
  *          description: refresh token
- *          parameters:
- *          -   name: refreshToken
- *              description: refreshToken
- *              in: formData
+ *          requestBody:
  *              required: true
- *              type: string
+ *              content:
+ *                  application/x-www-form-urlencoded:
+ *                      schema:
+ *                          $ref: "#/components/schemas/RefreshToken"
+ *                  application/json:
+ *                      schema:
+ *                          $ref: "#/components/schemas/RefreshToken"
  * 
  *          responses:
  *              201:
