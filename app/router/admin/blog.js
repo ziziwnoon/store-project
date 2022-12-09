@@ -65,6 +65,11 @@ router.post("/add" , uploadFile.single("image"),stringToArray("tags"),AdminBlogC
  *          summary: update blog
  *          tags: [Blog(AdminPanel)]
  *          description: update blog by id
+ *          parameters:
+ *          -   in: path
+ *              name: id
+ *              required: true
+ *              type: string
  *          requestBody:
  *              required: true
  *              content:

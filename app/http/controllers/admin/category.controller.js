@@ -10,9 +10,9 @@ class CategoryController extends Controller{
             const{title,parent} = req.body;
             const category = await CategoryModel.create({title,parent});
             if(!category) throw createError.InternalServerError("خطای درونی سرور");
-            return res.status(200).json({
+            return res.status(statusCode.OK).json({
                 data : {
-                    statusCode : 200,
+                    statusCode : statusCode.OK,
                     success : true ,
                     message : "دسته بندی با موفقیت ایجاد شد"
                 }
@@ -26,7 +26,7 @@ class CategoryController extends Controller{
         try {
             const parents = await CategoryModel.find({parent : undefined});
             if(!parents) throw createError.NotFound("دسته بندی یافت نشد");
-            return res.status(200).json({
+            return res.status(statusCode.OK).json({
                 data : {
                     parents
                 }
@@ -41,7 +41,7 @@ class CategoryController extends Controller{
             const {parent} = req.params;
             const children = await CategoryModel.find({parent});
             if(!children) throw createError.NotFound("دسته بندی یافت نشد");
-            return res.status(200).json({
+            return res.status(statusCode.OK).json({
                 data : {
                     children
                 }
@@ -100,7 +100,7 @@ class CategoryController extends Controller{
             // ])
 
             const categories = await CategoryModel.find({parent:undefined} , {__v : 0 , id:0})
-            return res.status(200).json({
+            return res.status(statusCode.OK).json({
                 data:{
                     categories
                 }
@@ -118,9 +118,9 @@ class CategoryController extends Controller{
             {parent : id}
         ]})
         if(deletedCategory.deletedCount == 0) throw createError.InternalServerError("دسته بندی حذف نشد");
-        return res.status(200).json({
+        return res.status(statusCode.OK).json({
             data : {
-                statusCode : 200,
+                statusCode : statusCode.OK,
                 message : "دسته بندی با موفقیت حذف شد"
             }
         })
@@ -142,9 +142,9 @@ class CategoryController extends Controller{
                     }
                 }
             ])
-            return res.status(200).json({
+            return res.status(statusCode.OK).json({
                 data : {
-                    statusCode : 200 ,
+                    statusCode : statusCode.OK ,
                     category
                 }
             })
@@ -160,9 +160,9 @@ class CategoryController extends Controller{
                     $match : {}
                 }
             ])
-            return res.status(200).json({
+            return res.status(statusCode.OK).json({
                 data : {
-                    statusCode : 200 ,
+                    statusCode : statusCode.OK ,
                     categories
                 }
             })
@@ -178,9 +178,9 @@ class CategoryController extends Controller{
         await updateCategorySchema.validateAsync(req.body)
         const updateResult = await CategoryModel.updateOne({_id : id}, {$set : {title}})
         if(updateResult.modifiedCount == 0) return createError.InternalServerError("ویرایش انجام نشد");
-        return res.status(200).json({
+        return res.status(statusCode.OK).json({
             data : {
-                statusCode : 200 ,
+                statusCode : statusCode.OK ,
                 message : "تغییر با موفقیت انجام شد"
             }
         })

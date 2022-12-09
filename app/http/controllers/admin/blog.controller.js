@@ -5,6 +5,7 @@ const path = require("path");
 const { BlogModel } = require("../../../models/blogs");
 const { deleteFileInPublic } = require("../../../utils/functions");
 const createError = require("http-errors")
+const statusCode = require("http-status-codes");
 
 class AdminBlogController extends Controller{
     async createBlog(req,res,next){
@@ -12,11 +13,11 @@ class AdminBlogController extends Controller{
             const result = await addBlogSchema.validateAsync(req.body);
             req.body.image = path.join(result.fileUploadPath , result.fileName);
             req.body.image = req.body.image.replace(/\\/g , "/");
-            const {title , text , short_text , catrgory , tags } = result;
+            const {title , text , short_text , category , tags } = result;
             const image = req.body.image;
             const author = req.user._id;
 
-            const createBlogResult = await BlogModel.create({title , text , short_text , catrgory , tags , image , author})
+            const createBlogResult = await BlogModel.create({title , text , short_text , category , tags , image , author})
             return res.json({
                 createBlogResult
             })
@@ -68,9 +69,9 @@ class AdminBlogController extends Controller{
                 
             ])
     
-            return res.status(200).json({
+            return res.status(statusCode.OK).json({
                 data : {
-                    statusCode : 200,
+                    statusCode : statusCode.OK,
                     blogs
                 }
             })
@@ -100,9 +101,9 @@ class AdminBlogController extends Controller{
             await this.findBlog(id);
             const deletedBlog = await BlogModel.deleteOne({_id:id});
             if(deletedBlog.deletedCount == 0) throw createError.InternalServerError("حذف انجام نشد");
-            return res.status(200).json({
+            return res.status(statusCode.OK).json({
                 data : {
-                    statusCode : 200 ,
+                    statusCode : statusCode.OK ,
                     message : "بلاگ با موفقیت حذف شد"
                 }
             })
@@ -132,7 +133,7 @@ class AdminBlogController extends Controller{
             if (updateBlogResult.modifiedCount ==0 ) throw createError.InternalServerError("بروزرسانی بلاگ انجام نشد")
             return res.json({
                 data : {
-                    statusCode : 200 ,
+                    statusCode : statusCode.OK ,
                     message : "بروزرسانی بلاگ با موفقیت انجام شد"
                 }
             })

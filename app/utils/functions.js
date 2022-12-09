@@ -66,10 +66,22 @@ function deleteFileInPublic(fileAddress){
        if(fs.existsSync(directory)) fs.unlinkSync(directory) 
     } 
 }
+
+function listOfImagesFromRequest(files , fileUploadPath){
+    if(files?.length > 0){
+        return (files.map(file => path.join(fileUploadPath , file.filename))).map(item => item.replace(/\\/g , "/"))
+    }
+    else {
+        return []
+    }
+}
+
+
 module.exports = {
     randomNumberGenerator,
     signJwtToken,
     signRefreshJwtToken,
     verifyRefreshToken,
-    deleteFileInPublic
+    deleteFileInPublic,
+    listOfImagesFromRequest
 }

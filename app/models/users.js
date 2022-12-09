@@ -8,6 +8,7 @@ const Schema = new mongoose.Schema({
     email : {type : String, lowercase : true },
     mobile : {type : String, required : true },
     role : {type : [String] , default: ["USER"]},
+    courses : {type : [mongoose.Types.ObjectId] , ref : "course" , default : []},
     bills : {type : [] , default:[]},
     discount : {type : Number , default : 0},
     birthday : {type:String},

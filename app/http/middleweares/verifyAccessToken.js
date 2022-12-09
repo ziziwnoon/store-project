@@ -4,13 +4,9 @@ const { ACCESS_TOKEN_SECTERT_KEY } = require("../../utils/constants");
 const { UserModel } = require("../../models/users");
 
 function getToken(headers){
-    try {
         const[bearer , token] = headers?.authorization?.split(" ") || [];
         if(token && ["Bearer", "bearer"].includes(bearer)) return token;
         throw createError.Forbidden("حساب کاربری شناسایی نشد وارد حساب خود شوید")
-    } catch (error) {
-        next(error)
-    }
 }
 function verifyAccesstoken(req,res,next){
     try {
@@ -48,4 +44,4 @@ module.exports = {
 
 
 
-//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtb2JpbGUiOiIwOTAzNTM2OTI4MiIsImlhdCI6MTY2NjkxNTEyNSwiZXhwIjoxNjk4NDcyNzI1fQ.IpjIPX0SepmN6I5pgZlf1_BnmEDz_utais8gtV7cDZY
+//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtb2JpbGUiOiIwOTAzNTM2OTI4MiIsImlhdCI6MTY3MDI4NTI3OCwiZXhwIjoxNzAxODQyODc4fQ.0IuPS1v2aWX9EiII-eayHHrostQFBWt4NZ51WIc8YjY

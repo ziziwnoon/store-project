@@ -1,6 +1,7 @@
 const { verifyAccesstoken, checkRole } = require("../../http/middleweares/verifyAccessToken");
 const { adminBlogRoutes } = require("./blog");
-const { CategoryRoutes } = require("./category");
+const { adminCategoryRoutes } = require("./category");
+const { adminProductRoutes } = require("./product");
 
 const router = require("express").Router();
 
@@ -13,9 +14,12 @@ const router = require("express").Router();
  *      description: Category utils
  *  -   name: Blog(AdminPanel)
  *      description: Blog utils
+ *  -   name: Product(AdminPanel)
+ *      description: Product utils
  */
-router.use("/category" , CategoryRoutes);
-router.use("/blog" , verifyAccesstoken ,adminBlogRoutes)
+router.use("/category" , adminCategoryRoutes);
+router.use("/blog"  ,adminBlogRoutes);
+router.use("/product" , adminProductRoutes)
 
 module.exports = {
     AdminRoutes : router

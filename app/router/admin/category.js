@@ -145,6 +145,11 @@ router.delete("/delete/:id" , CategoryController.removeCategory);
  *          summary: update category title by Id
  *          tags: [Category(AdminPanel)]
  *          description: update category title by Id
+ *          parameters:
+ *             -   in: path
+ *                 name: parent
+ *                 required: true
+ *                 type: string
  *          requestBody:
  *              required: true
  *              content:
@@ -162,5 +167,5 @@ router.delete("/delete/:id" , CategoryController.removeCategory);
 
 
 module.exports = {
-    CategoryRoutes : router
+    adminCategoryRoutes : router
 }
