@@ -13,7 +13,7 @@ const ChapterSchema = new mongoose.Schema({
     text : {type : String , required : true},
     episodes : {type : [EpisodeSchema] , default : []}
 })
-const Schema = new mongoose.Schema({
+const CourseSchema = new mongoose.Schema({
     title : {type : String , required : true},
     short_text : {type : String , required : true},
     text : {type : String , required : true},
@@ -21,19 +21,21 @@ const Schema = new mongoose.Schema({
     tags : {type : [String] , default : []},
     category : {type : mongoose.Types.ObjectId , ref : "category"},
     comments : {type : [CommentSchema] , default : []},
-    likes : {type : mongoose.Types.ObjectId , default : []},
-    dislikes : {type : mongoose.Types.ObjectId , default : []},
-    bookmark : {type : mongoose.Types.ObjectId , default : []},
+    likes : {type : [mongoose.Types.ObjectId] , default : []},
+    dislikes : {type : [mongoose.Types.ObjectId] , default : []},
+    bookmark : {type : [mongoose.Types.ObjectId ], default : []},
     price : {type : Number},
     discount : {type : Number , default : 0},
     type : {type : String , default : "free"}, //free,paid,VIP
     time : {type : String , default : "00:00:00"},
+    status : {type : String , default : "notStarted"} , //notStarted , onGoing , completed
     teacher : {type : mongoose.Types.ObjectId , ref : "user"},
-    chapter : {type : [ChapterSchema] , default : [] , required : true} ,
-    students : {type : mongoose.Types.ObjectId , ref : "user" , default : []}
+    chapters : {type : [ChapterSchema] , default : [] , required : true} ,
+    students : {type : [mongoose.Types.ObjectId] , ref : "user" , default : []}
 })
 
+CourseSchema.index({title : "text" , short_text : "text" , text : "text"});
 
 module.exports = {
-    CourseModel : model("course" , Schema)
+    CourseModel : model("course" , CourseSchema)
 }

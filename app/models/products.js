@@ -1,7 +1,7 @@
 const {default : mongoose, model} = require("mongoose");
 const { CommentSchema } = require("./public.schema");
 
-const Schema = new mongoose.Schema({
+const ProductSchema = new mongoose.Schema({
     title : {type : String , required : true},
     short_text : {type : String , required : true},
     text : {type : String , required : true},
@@ -29,7 +29,7 @@ const Schema = new mongoose.Schema({
     }}
 })
 
-
+ProductSchema.index({title : "text" , text : "text" , short_text : "text"})
 module.exports = {
-    ProductModel : model("product" , Schema)
+    ProductModel : model("product" , ProductSchema)
 }

@@ -3,6 +3,7 @@ const Controller = require("../../controller");
 const createError = require("http-errors");
 const { randomNumberGenerator, signJwtToken, verifyRefreshToken, signRefreshJwtToken } = require("../../../../utils/functions");
 const { UserModel } = require("../../../../models/users");
+const statusCode = require("http-status-codes");
 const { ROLE } = require("../../../../utils/constants");
 class UserAuthController extends Controller {
     async getOtp(req,res,next){
@@ -12,9 +13,9 @@ class UserAuthController extends Controller {
             const code = randomNumberGenerator();
             const result = await this.saveUser(mobile,code);
             if(!result) createError.Unauthorized("ورود انجام نشد");
-            return res.status(200).send(
+            return res.status(statusCode.OK).send(
                 {data : {
-                    statusCode : 200 ,
+                    statusCode : statusCode.OK ,
                     message : "با موفقیت وارد شدید",
                     code,
                     mobile
@@ -36,7 +37,7 @@ class UserAuthController extends Controller {
             if(user.otp.expiresin < now)  throw createError.Unauthorized("کد صحیح نیست")
             const accessToken = await signJwtToken(user._id);
             const refreshToken = await signRefreshJwtToken(user._id);
-            return res.status(200).json({
+            return res.status(statusCode.OK).json({
                 data : {
                     accessToken,
                     refreshToken
@@ -68,7 +69,7 @@ class UserAuthController extends Controller {
     async saveUser(mobile,code){
         let otp = {
             code ,
-            expiresin : (new Date().getTime()+120000)
+            expiresin : (new Date().getTime()+12000)
         }
         const result = await this.checkExistingUser(mobile);
         if(result){

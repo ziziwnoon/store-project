@@ -76,12 +76,50 @@ function listOfImagesFromRequest(files , fileUploadPath){
     }
 }
 
+function copyObject(object){
+    return JSON.parse(JSON.stringify(object))
+}
 
+function setFeatures(body){
+    const {colors , width , weight , height , length} = body;
+    let features = {};
+    features.colors = colors;
+    let type = "physical";
+    if (!isNaN(+width) || !isNaN(+weight) || !isNaN(+height) || !isNaN(+length)){
+        if(!width) features.width = 0;
+        else features.width = +width;
+        if(!weight) features.weight = 0;
+        else features.weight = +weight;
+        if(!height) features.height = 0;
+        else features.height = +height;
+        if(!length) features.length = 0;
+        features.length = +length;
+    }
+    else {
+        type = "virtual"
+    }
+    return features;
+}
+
+function deleteInvalidPropertiesInObject(data = {} , blackList = []){
+    const nullishValues = ["" , " " , null , undefined , 0 , "0"]; 
+    Object.entries(data).forEach(key => {
+        if(blackListFields.includes(key)) delete data[key];
+        if(nullishValues.includes(data[key])) delete data[key];
+        if(typeof data[key] == "string") data[key] = data[key].trim();
+        if(Array.isArray(data[key]) && data[key].length > 0) data[key] = data[key].map(item=>item.trim())
+        if(Array.isArray(data[key]) && data[key].length == 0) delete data[key]
+    })
+    return data;
+}
 module.exports = {
     randomNumberGenerator,
     signJwtToken,
     signRefreshJwtToken,
     verifyRefreshToken,
     deleteFileInPublic,
-    listOfImagesFromRequest
+    listOfImagesFromRequest,
+    copyObject,
+    setFeatures,
+    deleteInvalidPropertiesInObject
 }

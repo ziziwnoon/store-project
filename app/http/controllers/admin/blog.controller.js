@@ -127,7 +127,8 @@ class AdminBlogController extends Controller{
                 if(blackListFields.includes(key)) delete data[key];
                 if(nullishValues.includes(data[key])) delete data[key];
                 if(typeof data[key] == "string") data[key] = data[key].trim();
-                if(Array.isArray(data[key]) && Array.length > 0) data[key] = data[key].map(item=>item.trim())
+                if(Array.isArray(data[key]) && data[key].length > 0) data[key] = data[key].map(item=>item.trim())
+                if(Array.isArray(data[key]) && data[key].length == 0) delete data[key]
             })
             const updateBlogResult = await BlogModel.updateOne({_id : id} , {$set : data})
             if (updateBlogResult.modifiedCount ==0 ) throw createError.InternalServerError("بروزرسانی بلاگ انجام نشد")
