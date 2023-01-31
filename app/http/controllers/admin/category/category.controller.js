@@ -1,7 +1,7 @@
-const { CategoryModel } = require("../../../models/categories");
-const { addCategorySchema } = require("../../validators/admin/category.schema");
+const { CategoryModel } = require("../../../../models/categories");
+const { addCategorySchema } = require("../../../validators/admin/category.schema");
 const createError = require("http-errors");
-const Controller = require("../controller");
+const Controller = require("../../controller");
 const statusCode = require("http-status-codes");
 const mongoose = require("mongoose");
 class CategoryController extends Controller{

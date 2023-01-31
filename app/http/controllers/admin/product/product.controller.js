@@ -1,9 +1,9 @@
-const { ProductModel } = require("../../../models/products");
-const { deleteFileInPublic, listOfImagesFromRequest, setFeatures, copyObject } = require("../../../utils/functions");
-const { addProductSchema } = require("../../validators/admin/product.schema");
-const Controller = require("../controller");
+const { ProductModel } = require("../../../../models/products");
+const { deleteFileInPublic, listOfImagesFromRequest, setFeatures, copyObject, deleteInvalidPropertiesInObject } = require("../../../../utils/functions");
+const { addProductSchema } = require("../../../validators/admin/product.schema");
+const Controller = require("../../controller");
 const path = require("path");
-const { ObjectIdValidator } = require("../../validators/public.validator");
+const { ObjectIdValidator } = require("../../../validators/public.validator");
 const createHttpError = require("http-errors");
 const statusCode = require("http-status-codes");
 const ProductBlackList = {

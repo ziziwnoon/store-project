@@ -1,9 +1,9 @@
 const { validateAsync } = require("@hapi/joi/lib/base");
-const { addBlogSchema } = require("../../validators/admin/blog.schema");
-const Controller = require("../controller");
+const { addBlogSchema } = require("../../../validators/admin/blog.schema");
+const Controller = require("../../controller");
 const path = require("path");
-const { BlogModel } = require("../../../models/blogs");
-const { deleteFileInPublic } = require("../../../utils/functions");
+const { BlogModel } = require("../../../../models/blogs");
+const { deleteFileInPublic } = require("../../../../utils/functions");
 const createError = require("http-errors")
 const statusCode = require("http-status-codes");
 

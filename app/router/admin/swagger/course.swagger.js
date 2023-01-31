@@ -56,6 +56,46 @@
  */
 
 
+/**
+ * @swagger
+ *  definitions:
+ *       getListOfCourses:
+ *           type: array
+ *           items:
+ *               type: object
+ *               properties:
+ *                   statusCode:
+ *                       type: integer
+ *                       example: 200
+ *               data:
+ *                   type: object
+ *                   propertise:
+ *                       courses: 
+ *                           _id:
+ *                               type: string
+ *                               example: 56464645
+ *                           title:
+ *                               type: string
+ *                               example: 56464645
+ *                           short_text:
+ *                               type: string
+ *                               example: 56464645
+ *                           text:
+ *                               type: string
+ *                               example: 56464645
+ *                           tags:
+ *                               type: array
+ *                               example: 56464645
+ *                           category:
+ *                               type: string
+ *                               example: 56464645
+ *                           price:
+ *                               type: string
+ *                               example: 56464645
+ *                           discount:
+ *                               type: string
+ *                               example: 56464645
+ */
 
 
 /**
@@ -73,6 +113,10 @@
  *          responses:
  *              200:
  *                  description: success
+ *                  content:
+ *                      application/json:
+ *                          schema: 
+ *                           $ref: '#/definitions/getListOfCourses'
  * 
  */
 
@@ -91,12 +135,16 @@
  *          responses:
  *              200:
  *                  description: success
+ *                  content:
+ *                      application/json:
+ *                          schema: 
+ *                           $ref: '#/definitions/publicDefinition'
  * 
  */
 
 /**
  * @swagger
- *  /admin/course/add:
+ *  /admin/course/add-course:
  *      post:
  *          tags: [Course(AdminPanel)]
  *          summary: add course
@@ -110,4 +158,9 @@
  *          responses:
  *              200:
  *                  description: success
+ *                  content:
+ *                     application/json:
+ *                         schema: 
+ *                          $ref: '#/definitions/publicDefinition'
  */
+

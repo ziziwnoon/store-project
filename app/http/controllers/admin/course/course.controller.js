@@ -1,10 +1,11 @@
-const Controller = require("../controller");
+const Controller = require("../../controller");
 const {StatusCodes : HttpStatus} = require("http-status-codes");
-const { CourseModel } = require("../../../models/course");
+const { CourseModel } = require("../../../../models/course");
 const path = require("path");
-const { deleteFileInPublic } = require("../../../utils/functions");
-const { addCourseSchema } = require("../../validators/admin/course.schema");
+const { deleteFileInPublic } = require("../../../../utils/functions");
+const { addCourseSchema } = require("../../../validators/admin/course.schema");
 const createHttpError = require("http-errors");
+const { default: mongoose } = require("mongoose");
 class CourseController extends Controller{
     async getAllCourses(req,res,next){
         try {
@@ -70,6 +71,32 @@ class CourseController extends Controller{
         } catch (error) {
             next(error)
         }
+    }
+
+    async addChapter(req, res, next){
+        try {
+            const {id , title , text} = req.body;
+            await this.findCourseById(id);
+            const addChapterResult = await CourseModel.updateOne({_id : id} , {$push : {
+                chapters : {title , text , episodes : []}
+            }})
+            if (addChapterResult.modifiedCount == 0) throw createHttpError.BadRequest("فصل جدید اضافه نشد");
+            return res.status(HttpStatus.CREATED).json({
+                statusCode : HttpStatus.CREATED ,
+                data : {
+                    message : "فصل جدید با موفقیت اضافه شد" 
+                }
+            })
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    async findCourseById(id){
+        if(!mongoose.isValidObjectId(id)) throw createHttpError.BadRequest("آیدی وارد شده صحیح نمیباشد");
+        const course = await CourseModel.findById(id)
+        if(!course) throw createHttpError.NotFound("دوره یافت نشد");
+        return course;
     }
 }
 
