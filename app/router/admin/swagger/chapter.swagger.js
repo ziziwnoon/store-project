@@ -44,6 +44,15 @@
  *                 text:
  *                     type: string
  *                     description: text of product
+ *          Edit-Chapter:
+ *              type: object
+ *              properties:
+ *                 title:
+ *                     type: string
+ *                     description: title of chapter
+ *                 text:
+ *                     type: string
+ *                     description: text of product
  * 
  */
 
@@ -77,14 +86,14 @@
 
 /**
  * @swagger
- *  /admin/chapter/list/{id}:
+ *  /admin/chapter/list/{courseID}:
  *      get:
  *          tags: [Chapter(AdminPanel)]
  *          summary: list of chapters of course
  *          description: list of chapters of course
  *          parameters:
  *              -   in: path
- *                  name: id
+ *                  name: courseID
  *                  type: string
  *                  required: true
  *          responses:
@@ -108,6 +117,36 @@
  *                  name: id
  *                  type: string
  *                  required: true
+ *          responses:
+ *              200:
+ *                  description: success
+ *                  content:
+ *                     application/json:
+ *                         schema: 
+ *                          $ref: '#/definitions/publicDefinition'
+ */
+
+/**
+ * @swagger
+ *  /admin/chapter/edit/{id}:
+ *      patch:
+ *          tags: [Chapter(AdminPanel)]
+ *          summary: edit chapter
+ *          description: edit chapter
+ *          parameters:
+ *              -   in: path
+ *                  name: id
+ *                  type: string
+ *                  required: true
+ *          requestBody:
+ *              required: true
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/Edit-Chapter'
+ *                  application/x-www-form-urlencoded:
+ *                      schema:
+ *                          $ref: '#/components/schemas/Edit-Chapter'
  *          responses:
  *              200:
  *                  description: success

@@ -11,8 +11,18 @@ class CourseController extends Controller{
         try {
             const search = req?.query?.search || "";
             let courses;
-            if(search) courses = await CourseModel.find({$text : {$search : search}}).sort({_id : -1})
-            else courses = await CourseModel.find({}).sort({_id : -1})
+            if(search) courses = await CourseModel.find({$text : {$search : search}})
+            .populate([
+                {path : "category" , select:{title : 1 , children : 0}},
+                {path : "teacher" , select : {first_name : 1 , last_name : 1 ,email : 1 , mobile : 1}}
+            ])
+            .sort({_id : -1})
+            else courses = await CourseModel.find({})
+            .populate([
+                {path : "category" , select:{title : 1}},
+                {path : "teacher" , select : {first_name : 1 , last_name : 1 ,email : 1 , mobile : 1}}
+            ])
+            .sort({_id : -1})
             return res.status(HttpStatus.OK).json({
                 data : {
                     statusCode : HttpStatus.OK ,

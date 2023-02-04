@@ -28,8 +28,8 @@ class ChapterController extends Controller{
 
     async listOfChapters(req, res, next){
         try {
-            const {id} = req.params;
-            const course = await this.getChapterOfCourse(id);
+            const {courseID} = req.params;
+            const course = await this.getChapterOfCourse(courseID);
             return res.status(HttpStatus.OK).json({
                 statusCode : HttpStatus.OK ,
                 data : {

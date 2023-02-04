@@ -101,7 +101,7 @@ function setFeatures(body){
     return features;
 }
 
-function deleteInvalidPropertiesInObject(data = {} , blackList = []){
+function deleteInvalidPropertiesInObject(data = {} , blackListFields = []){
     const nullishValues = ["" , " " , null , undefined , 0 , "0"]; 
     Object.entries(data).forEach(key => {
         if(blackListFields.includes(key)) delete data[key];
