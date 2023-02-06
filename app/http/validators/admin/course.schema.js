@@ -13,9 +13,19 @@ const addCourseSchema = Joi.object({
     discount : Joi.number().allow(null , 0 , "0").error(new Error("تخفیف وارد شده صحیح نیست")),
     type : Joi.string().regex(/(free|paid|VIP)/i),
 })
+const addEpisodeSchema = Joi.object({
+    title : Joi.string().min(3).max(30).required().error(new Error("عنوان وارد شده صحیح نیست")),
+    text : Joi.string().error(new Error("توضیحات وارد شده صحیح نیست")),
+    chapterID : Joi.string().regex(MongoIdPattern).error(new Error("شناسه فصل صحیح نمیباشد")),
+    courseID : Joi.string().regex(MongoIdPattern).error(new Error("شناسه دوره صحیح نمیباشد")),
+    type : Joi.string().regex(/(lock|unlock)/i),
+    fileUploadPath : Joi.allow(),
+    fileName : Joi.string().regex(/(\.mp4|\.mkv|\.mov|\.mpg|)$/).error(new Error("تصویر وارد شده صحیح نیست"))
+})
 
 
 
 module.exports = {
     addCourseSchema ,
+    addEpisodeSchema
 }

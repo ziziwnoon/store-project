@@ -112,6 +112,23 @@ function deleteInvalidPropertiesInObject(data = {} , blackListFields = []){
     })
     return data;
 }
+
+function getTime(seconds) {
+    let total = Math.round(seconds) / 60;
+    let [minutes, second] = String(total).split(".");
+    second = Math.round((second * 60) / 100).toString().substring(0, 2);
+    let houre = 0;
+    if (minutes > 60) {
+        total = minutes / 60
+         let [h1, m1] = String(total).split(".");
+         houre = h1,
+         minutes = Math.round((m1 * 60) / 100).toString().substring(0, 2);
+    }
+    if(String(houre).length == 1) houre = `0${houre}`
+    if(String(minutes).length == 1) minutes = `0${minutes}`
+    if(String(second).length == 1) second = `0${second}`
+    return (houre + ":" + minutes + ":" +second)
+}
 module.exports = {
     randomNumberGenerator,
     signJwtToken,
@@ -121,5 +138,6 @@ module.exports = {
     listOfImagesFromRequest,
     copyObject,
     setFeatures,
-    deleteInvalidPropertiesInObject
+    deleteInvalidPropertiesInObject,
+    getTime
 }

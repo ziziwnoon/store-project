@@ -2,6 +2,7 @@ const express = require("express");
 const {default : mongoose} = require("mongoose");
 const morgan = require("morgan");
 const path = require("path");
+require("dotenv").config();
 const { AllRoutes } = require("./router/router");
 const createError = require("http-errors");
 const swaggerUI = require("swagger-ui-express");

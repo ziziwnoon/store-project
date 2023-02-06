@@ -37,7 +37,7 @@ class ProductController extends Controller{
                 }
             })
         } catch (error) {
-            deleteFileInPublic(req.body.image)
+            deleteFileInPublic(req.body.images)
             next(error)
         }
     }
