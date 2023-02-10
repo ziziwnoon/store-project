@@ -53,6 +53,35 @@
  *                  image:
  *                      type: string
  *                      format: binary
+ *          Edit-Course:
+ *              type: object
+ *              properties:
+ *                  title:
+ *                      type: string
+ *                      description: title of product
+ *                  short_text:
+ *                      type: string
+ *                      description: short_text of product
+ *                  text:
+ *                      type: string
+ *                      description: text of product
+ *                  tags:
+ *                      type: array
+ *                      description: tags of product
+ *                  category:
+ *                      type: string
+ *                      description: category of product
+ *                  type:
+ *                      $ref: '#/components/schemas/Types'
+ *                  price:
+ *                      type: string
+ *                      description: price of product
+ *                  discount:
+ *                      type: string
+ *                      description: discount of product
+ *                  image:
+ *                      type: string
+ *                      format: binary
  */
 
 
@@ -136,7 +165,7 @@
  *              200:
  *                  description: success
  *                  content:
- *                      application/json:
+ *                      application/json: 
  *                          schema: 
  *                           $ref: '#/definitions/publicDefinition'
  * 
@@ -155,6 +184,34 @@
  *                  multipart/form-data:
  *                      schema:
  *                          $ref: '#/components/schemas/Add-Course'
+ *          responses:
+ *              200:
+ *                  description: success
+ *                  content:
+ *                     application/json:
+ *                         schema: 
+ *                          $ref: '#/definitions/publicDefinition'
+ */
+
+
+/**
+ * @swagger
+ *  /admin/course/edit-course/{id}:
+ *      patch:
+ *          tags: [Course(AdminPanel)]
+ *          summary: edit course
+ *          description: edit course
+ *          parameters:
+ *              -   in: path
+ *                  name: id
+ *                  type: string
+ *                  required: true
+ *          requestBody:
+ *              required: true
+ *              content:
+ *                  multipart/form-data:
+ *                      schema:
+ *                          $ref: '#/components/schemas/Edit-Course'
  *          responses:
  *              200:
  *                  description: success

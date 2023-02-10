@@ -102,7 +102,7 @@ function setFeatures(body){
 }
 
 function deleteInvalidPropertiesInObject(data = {} , blackListFields = []){
-    const nullishValues = ["" , " " , null , undefined , 0 , "0"]; 
+    const nullishValues = ["" , " " , null , undefined , 0 , "0" , false]; 
     Object.entries(data).forEach(key => {
         if(blackListFields.includes(key)) delete data[key];
         if(nullishValues.includes(data[key])) delete data[key];
@@ -115,19 +115,47 @@ function deleteInvalidPropertiesInObject(data = {} , blackListFields = []){
 
 function getTime(seconds) {
     let total = Math.round(seconds) / 60;
-    let [minutes, second] = String(total).split(".");
+    let [minute, second] = String(total).split(".");
     second = Math.round((second * 60) / 100).toString().substring(0, 2);
-    let houre = 0;
-    if (minutes > 60) {
-        total = minutes / 60
+    let hour = 0;
+    if (minute > 60) {
+        total = minute / 60
          let [h1, m1] = String(total).split(".");
-         houre = h1,
-         minutes = Math.round((m1 * 60) / 100).toString().substring(0, 2);
+         hour = h1,
+         minute = Math.round((m1 * 60) / 100).toString().substring(0, 2);
     }
-    if(String(houre).length == 1) houre = `0${houre}`
-    if(String(minutes).length == 1) minutes = `0${minutes}`
+    if(String(hour).length == 1) hour = `0${hour}`
+    if(String(minute).length == 1) minute = `0${minute}`
     if(String(second).length == 1) second = `0${second}`
-    return (houre + ":" + minutes + ":" +second)
+    return (hour + ":" + minute + ":" +second)
+}
+
+function getTotalTimeOfCourse(chapters = []){
+    let time , hour , minute , second = 0;
+    for (const chapter of chapters) { //loop on each chapter of a number of chapters
+        if(Array.isArray(chapter?.episodes)){ //check if each chapter has an array of episodes
+            for (const episode of chapter.episodes) { //loop on each episode of a chapters
+                if(episode?.time) time = episode.time.split(":");
+                else time = "00:00:00".split(":");
+                if(time.length == 3){
+                    second+= Number(time[0]) * 3600;
+                    second+= Number(time[1]) * 60;
+                    second+= Number(time[2]);
+                }
+                else if(time.length == 2){
+                    second+= Number(time[0]) * 60;
+                    second+= Number(time[1]);
+                }
+            }
+        }
+    }
+    hour = Math.floor(second / 3600) //convert second to hour
+    minute = Math.floor(second / 60) % 60 //convert second to minute
+    second = Math.floor(second % 60) //convert second to second
+    if(String(hour).length == 1) hour = `0${hour}`
+    if(String(minute).length == 1) minute = `0${minute}`
+    if(String(second).length == 1) second = `0${second}`
+    return (hour + ":" + minute + ":" +second)
 }
 module.exports = {
     randomNumberGenerator,
@@ -139,5 +167,6 @@ module.exports = {
     copyObject,
     setFeatures,
     deleteInvalidPropertiesInObject,
-    getTime
+    getTime,
+    getTotalTimeOfCourse
 }

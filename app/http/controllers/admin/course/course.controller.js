@@ -2,7 +2,7 @@ const Controller = require("../../controller");
 const {StatusCodes : HttpStatus} = require("http-status-codes");
 const { CourseModel } = require("../../../../models/course");
 const path = require("path");
-const { deleteFileInPublic } = require("../../../../utils/functions");
+const { deleteFileInPublic, copyObject, deleteInvalidPropertiesInObject, getTotalTimeOfCourse } = require("../../../../utils/functions");
 const { addCourseSchema } = require("../../../validators/admin/course.schema");
 const createHttpError = require("http-errors");
 const { default: mongoose } = require("mongoose");
@@ -67,10 +67,38 @@ class CourseController extends Controller{
         }
     }
 
+    async editCourseById(req, res, next){
+        try {
+            const {id} = req.params;
+            const course = await this.findCourseById(id);
+            const {fileUploadPath , fileName} = req.body;
+            const data = copyObject(req.body);
+            const blackListFields = ["time" , "students" , "comments" , "likes" , "dislikes" , "episodes" , "chapters" , "fileUploadPath" , "fileName"];
+            deleteInvalidPropertiesInObject(data , blackListFields);
+            if(req.file){
+                data.image = path.join(fileUploadPath , fileName).replace(/\\/g , "/");
+                deleteFileInPublic(course.image)
+            }
+            const updatedCourse = await CourseModel.updateOne({_id : id} , {$set : data});
+            
+            if(!updatedCourse) throw createHttpError.InternalServerError("بروزرسانی انجام نشد")
+            return res.status(HttpStatus.OK).json({
+                statusCode : HttpStatus.OK ,
+                data : {
+                    message : "بروزرسانی با موفقیت انجام شد"
+                }
+            })
+
+        } catch (error) {
+            next(error)
+        }
+    }
+
     async getCourseById(req, res, next){
         try {
             const {id} = req.params;
             const course = await CourseModel.findById(id);
+            course.time = getTotalTimeOfCourse(course.chapters)
             if(!course) throw createHttpError.NotFound("دوره یافت نشد");
             return res.status(HttpStatus.OK).json({
                 data : {

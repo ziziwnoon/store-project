@@ -43,6 +43,16 @@
  *                 text:
  *                     type: string
  *                     description: text of product
+ *                 type:
+ *                     type: string
+ *                     description: type of episode
+ *                     enum:
+ *                          -   lock
+ *                          -   unlock
+ *                 video:
+ *                     type: string
+ *                     description: time of episode
+ *                     format: binary
  * 
  */
 
@@ -50,7 +60,7 @@
 /**
  * @swagger
  *  /admin/episode/add:
- *      post:
+ *      patch:
  *          tags: [Episode(AdminPanel)]
  *          summary: add episode
  *          description: add episode
@@ -60,6 +70,33 @@
  *                  multipart/form-data:
  *                      schema:
  *                          $ref: '#/components/schemas/Add-Episode'
+ *          responses:
+ *              200:
+ *                  description: success
+ *                  content:
+ *                     application/json:
+ *                         schema: 
+ *                          $ref: '#/definitions/publicDefinition'
+ */
+
+/**
+ * @swagger
+ *  /admin/episode/edit/{episodeID}:
+ *      patch:
+ *          tags: [Episode(AdminPanel)]
+ *          summary: edit episode
+ *          description: edit episode
+ *          parameters:
+ *              -   in: path
+ *                  name: episodeID
+ *                  type: string
+ *                  required: true
+ *          requestBody:
+ *              required: true
+ *              content:
+ *                  multipart/form-data:
+ *                      schema:
+ *                          $ref: '#/components/schemas/Edit-Episode'
  *          responses:
  *              200:
  *                  description: success
