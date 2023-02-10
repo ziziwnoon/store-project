@@ -15,4 +15,6 @@
  *      description: Chapter managment
  *  -   name: Episode(AdminPanel)
  *      description: Episodes of Chapters managment
+ *  -   name: User(AdminPanel)
+ *      description: Users managment
  */
