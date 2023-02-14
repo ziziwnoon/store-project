@@ -17,4 +17,6 @@
  *      description: Episodes of Chapters managment
  *  -   name: User(AdminPanel)
  *      description: Users managment
+ *  -   name: RBAC(AdminPanel)
+ *      description: RoleBaseAccessControll system , create and edit permissions
  */
