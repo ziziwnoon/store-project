@@ -1,12 +1,13 @@
 const { default: mongoose, model } = require("mongoose");
 
-const roleSchema = new mongoose.Schema({
-    title : {Type : String , unique : true},
-    permissions : {Type : [mongoose.Types.ObjectId] , ref : 'permissions' , default : []}
+const RoleSchema = new mongoose.Schema({
+    title : {type : String , unique : true},
+    permissions : {type : [mongoose.Types.ObjectId] , ref : 'permission' , default : []}
 } , {
+    
     toJSON : {virtuals : true}
 })
 
 module.exports = {
-    RoleModel : model("role" , roleSchema)
+    RoleModel : mongoose.model("role" , RoleSchema)
 }
