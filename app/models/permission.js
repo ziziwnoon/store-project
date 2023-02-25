@@ -1,8 +1,8 @@
 const { default: mongoose, model } = require("mongoose");
 
 const permissionSchema = new mongoose.Schema({
-    title : {Type : String , unique : true},
-    description : {Type : String ,  default : ""}
+    title : {type : String , unique : true},
+    description : {type : String ,  default : ""}
 } , {
     toJSON : {virtuals : true}
 })

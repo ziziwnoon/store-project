@@ -1,14 +1,3 @@
-/**
- * @swagger
- *  components:
- *      schemas:
- *          Permissions:
- *              type: string
- *              enum:
- *                  -   blog
- *                  -   course
- *                  -   product
- */
 
 /**
  * @swagger
@@ -59,17 +48,19 @@
  *              properties:
  *                  title:
  *                      type: string
- *                      description: the title for adding a new category 
+ *                      description: the title for adding a new role 
  *                  permissions:
- *                      $ref: '#/components/schemas/Permissions'
+ *                      type: array
+ *                      description: the permissions for adding a new role 
  *          Edit-Role:
  *              type: object
  *              properties:
  *                  title:
  *                      type: string
- *                      description: the title for adding a new category 
+ *                      description: the title for adding a new role 
  *                  permissions:
- *                      $ref: '#/components/schemas/Permissions'
+ *                      type: array
+ *                      description: the permissions for adding a new role 
  */
 
 /**
@@ -127,14 +118,14 @@
  */
 /**
  * @swagger
- *  /admin/role/remove/{id}:
+ *  /admin/role/remove/{field}:
  *      delete:
  *          tags: [RBAC(AdminPanel)]
  *          summary: remove role
  *          description: edit role
  *          parameters:
  *              -   in: path
- *                  name: id
+ *                  name: field
  *                  type: string
  *                  required: true
  *          responses:
