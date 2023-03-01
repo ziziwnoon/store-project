@@ -14,8 +14,8 @@ class UserAuthController extends Controller {
             const result = await this.saveUser(mobile,code);
             if(!result) createError.Unauthorized("ورود انجام نشد");
             return res.status(statusCode.OK).send(
-                {data : {
-                    statusCode : statusCode.OK ,
+                {statusCode : statusCode.OK ,
+                data : {
                     message : "با موفقیت وارد شدید",
                     code,
                     mobile
@@ -67,16 +67,19 @@ class UserAuthController extends Controller {
     }
 
     async saveUser(mobile,code){
+        const now = (new Date().getTime())
         let otp = {
             code ,
-            expiresin : (new Date().getTime()+12000)
+            expiresin : now + 120000 
         }
-        const result = await this.checkExistingUser(mobile);
-        if(result){
+        const user = await this.checkExistingUser(mobile);
+        if(user){
+            // console.log(user.otp.expiresin, now);
+            // if (+user.otp.expiresin > now) throw createError.Forbidden("کد اعتبار سنجی قبلی هنوز منقضی نشده است")
             return (await this.updateUser(mobile , {otp}))
         }
         return !!(await UserModel.create({
-            mobile , otp , role : [ROLE.USER]
+            mobile , otp , role : ROLE.USER
         }))
     }
 

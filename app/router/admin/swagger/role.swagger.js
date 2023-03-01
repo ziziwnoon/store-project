@@ -20,6 +20,9 @@
  *                           title:
  *                               type: string
  *                               example: 56464645
+ *                           description:
+ *                               type: string
+ *                               example: desc of role
  *                           permissions:
  *                               type: array
  *                               items: 
@@ -49,6 +52,9 @@
  *                  title:
  *                      type: string
  *                      description: the title for adding a new role 
+ *                  description:
+ *                      type: string
+ *                      description: the desc for adding a new role 
  *                  permissions:
  *                      type: array
  *                      description: the permissions for adding a new role 
@@ -58,6 +64,9 @@
  *                  title:
  *                      type: string
  *                      description: the title for adding a new role 
+ *                  description:
+ *                      type: string
+ *                      description: the desc for adding a new role 
  *                  permissions:
  *                      type: array
  *                      description: the permissions for adding a new role 
@@ -90,7 +99,7 @@
 /**
  * @swagger
  *  /admin/role/edit/{id}:
- *      post:
+ *      patch:
  *          tags: [RBAC(AdminPanel)]
  *          summary: edit role
  *          description: edit role

@@ -12,10 +12,7 @@ const stringToArray = function(...args){
                 else {
                     req.body[field] = [req.body[field]]
                 }
-            } else if ((req.body[field].constructor).toString().toLowerCase().indexOf("array")>=0){
-                req.body[field] = req.body[field].map(item=>item.trim());
-            }
-            else if(typeof req.body[field] == "object"){
+            } else if(typeof req.body[field] == "object"){
                
                 if(req.body[field].indexOf(',') >= 0){
                     req.body[field] = (req.body[field].split(',')).map(item=>item.trim())
@@ -24,7 +21,10 @@ const stringToArray = function(...args){
                     req.body[field] = [req.body[field]]
                 }
             }
-            
+            if (Array.isArray(req.body[field])){
+                req.body[field] = req.body[field].map(item=>item.trim());
+                req.body[field] = [... new Set(req.body[field])]
+            }
         }
         else
         {

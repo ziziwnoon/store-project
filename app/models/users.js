@@ -7,7 +7,7 @@ const UserSchema = new mongoose.Schema({
     password : {type : String},
     email : {type : String, lowercase : true },
     mobile : {type : String, required : true },
-    role : {type : [String] , default: ["USER"]},
+    role : {type : String , default: "USER"},
     courses : {type : [mongoose.Types.ObjectId] , ref : "course" , default : []},
     bills : {type : [] , default:[]},
     discount : {type : Number , default : 0},

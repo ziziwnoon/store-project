@@ -2,8 +2,9 @@ const { RoleModel } = require("../../../../models/role");
 const Controller = require("../../controller");
 const {StatusCodes : HttpStatus} = require("http-status-codes");
 const createHttpError = require("http-errors");
-const { addRoleSchema } = require("../../../validators/admin/RBAC.schema");
+const { addRoleSchema, updateRoleSchema } = require("../../../validators/admin/RBAC.schema");
 const { default: mongoose } = require("mongoose");
+const { copyObject, deleteInvalidPropertiesInObject } = require("../../../../utils/functions");
 
 
 class RoleController extends Controller{
@@ -22,9 +23,10 @@ class RoleController extends Controller{
     }
     async addRole(req, res, next){
         try {
-            const {title , permissions} = await addRoleSchema.validateAsync(req.body)
+            console.log(req.body.permissions);
+            const {title , description ,permissions} = await addRoleSchema.validateAsync(req.body)
             await this.findRoleByTitle(title)
-            const role = await RoleModel.create({title , permissions})
+            const role = await RoleModel.create({title , description ,permissions })
             if(!role) throw createHttpError.InternalServerError("نقش موردنظر ایجاد نشد")
             return res.status(HttpStatus.CREATED).json({
                 statusCode : HttpStatus.CREATED,
@@ -37,8 +39,6 @@ class RoleController extends Controller{
         }
     }
     
-    
-    
     async removeRole(req, res, next){
         try {
             const {field} = req.params;
@@ -49,6 +49,26 @@ class RoleController extends Controller{
                 statusCode : HttpStatus.OK ,
                 data : {
                     message : "نقش موردنظر با موفقیت حذف شد"
+                }
+            })
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    async updateRoleById(req, res, next){
+        try {
+            const {id} = req.params;
+            await this.findRoleByIdOrTitle(id);
+            //await updateRoleSchema.validateAsync(req.body)
+            const data = copyObject(req.body);
+            deleteInvalidPropertiesInObject(data , [])
+            const updateResult = await RoleModel.updateOne({_id : id} , {$set : data})
+            if(!updateResult.modifiedCount) throw createHttpError.InternalServerError("نقش موردنظر ویرایش نشد")
+            return res.status(HttpStatus.OK).json({
+                statusCode : HttpStatus.OK ,
+                data : {
+                    message : "نقش موردنظر با موفقیت ویرایش شد"
                 }
             })
         } catch (error) {

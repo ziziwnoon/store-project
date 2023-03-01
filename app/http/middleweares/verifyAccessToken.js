@@ -25,23 +25,13 @@ function verifyAccesstoken(req,res,next){
     }    
 }
 
-function checkRole(role){
-    return function(req,res,next){
-        try {
-            const user = req.user;
-            if(user.role.includes(role)) return next()
-            throw createError.Forbidden("شما به این سطح دسترسی ندارید")
-        } catch (error) {
-            next(error)
-        }
-    }
-}
+
 
 module.exports = {
     verifyAccesstoken,
-    checkRole
+    
 } 
 
 
 
-//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtb2JpbGUiOiIwOTAzNTM2OTI4MiIsImlhdCI6MTY3NTExNjkyMSwiZXhwIjoxNzA2Njc0NTIxfQ.GoBtoTkn7SG-1X7D8avIswT2AlxxCsf69ZhnksHA2JM
+//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtb2JpbGUiOiIwOTAzNTM2OTI4MiIsImlhdCI6MTY3NzcwMzcwNCwiZXhwIjoxNzA5MjYxMzA0fQ.JMoVHkQjvXCwzgPJY8ucN_nNFGN2UmHIFmKnkuVJdsw

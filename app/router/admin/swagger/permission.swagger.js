@@ -78,7 +78,7 @@
 /**
  * @swagger
  *  /admin/permission/edit/{id}:
- *      post:
+ *      patch:
  *          tags: [RBAC(AdminPanel)]
  *          summary: edit permission
  *          description: edit permission
