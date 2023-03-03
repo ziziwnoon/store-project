@@ -81,6 +81,18 @@
  *                           $ref: '#/definitions/ListOfUsers'
  * 
  */
+/**
+ * @swagger
+ *  /admin/user/profile:
+ *      get:
+ *          tags: [User(AdminPanel)]
+ *          summary: get user profile
+ *          description: get user information
+ *          responses:
+ *              200:
+ *                  description: success
+ * 
+ */
 
 /**
  * @swagger
