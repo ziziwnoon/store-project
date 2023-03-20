@@ -1,0 +1,19 @@
+mutation{
+  commentForProduct(comment:"new comment for product" , productID : "638e8c81e7a888d6c41efe8f" , parent:""){
+   statusCode
+    data
+  }
+}
+mutation{
+  commentForBlog(comment:"new comment for product" , productID : "638e8c81e7a888d6c41efe8f" , parent:""){
+   statusCode
+    data
+  }
+}
+
+mutation{
+  commentForCourse(comment:"new comment for product" , productID : "638e8c81e7a888d6c41efe8f" , parent:""){
+   statusCode
+    data
+  }
+}

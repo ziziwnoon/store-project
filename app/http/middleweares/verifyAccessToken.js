@@ -25,6 +25,9 @@ function verifyAccesstoken(req,res,next){
         next(error)
     }    
 }
+
+//npm audit fix --force برای رفع آسیب دیدگی برای کارکردن فانکشن پایین
+//گراف کیوال و جیسون وب توکن آپدیت باشه
 async function verifyAccesstokenInGraphQL(req ){
     try {
         const token = getToken(req.headers)

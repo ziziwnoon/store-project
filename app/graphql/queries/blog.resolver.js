@@ -13,7 +13,10 @@ const BlogResolver = {
         const findQuery = category ? {category} : {}
         const {req} = context;
         req.user = await verifyAccesstokenInGraphQL(req)
-        return await BlogModel.find(findQuery).populate([{path :'author'} , {path : 'category'}])
+        return await BlogModel.find(findQuery).populate([{path :'author'} , 
+        {path : 'category'} , 
+        {path : 'comments.user'} , 
+        {path : 'comments.answers.user'}])
     }
 }
 

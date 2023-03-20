@@ -1,24 +1,18 @@
+
 {
-  products {
+  products{
     _id
     title
-    supplier {
-      first_name
-      last_name
-    }
     text
-    images
-    imagesURL
-    features {
-      length
-      height
-      width
-      weight
-      color
-      madein
-    }
-    category{
-      title
+    comments{
+      comment
+      allowToComment
+      user{
+        last_name
+      }
+      answers{
+        comment
+      }
     }
   }
 }
