@@ -26,9 +26,9 @@ const CourseSchema = new mongoose.Schema({
     tags : {type : [String] , default : []},
     category : {type : mongoose.Types.ObjectId , ref : "category"},
     comments : {type : [CommentSchema] , default : []},
-    likes : {type : [mongoose.Types.ObjectId] , default : []},
-    dislikes : {type : [mongoose.Types.ObjectId] , default : []},
-    bookmark : {type : [mongoose.Types.ObjectId ], default : []},
+    likes : {type : [mongoose.Types.ObjectId] ,ref : "user", default : []},
+    dislikes : {type : [mongoose.Types.ObjectId] ,ref : "user", default : []},
+    bookmark : {type : [mongoose.Types.ObjectId ],ref : "user", default : []},
     price : {type : Number},
     discount : {type : Number , default : 0},
     type : {type : String , default : "free"}, //free,paid,VIP

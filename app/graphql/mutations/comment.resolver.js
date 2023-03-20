@@ -9,6 +9,7 @@ const { copyObject } = require("../../utils/functions");
 const { default: mongoose } = require("mongoose");
 const { CourseModel } = require("../../models/course");
 const { ProductModel } = require("../../models/products");
+const { checkExistingBlog, checkExistingCourse, checkExistingProduct } = require("../utils");
 
 const CommentForBlog = {
     type : ResponseType,
@@ -180,22 +181,6 @@ const CommentForProduct = {
         }}
 
     }
-}
-
-async function checkExistingBlog(id) {
-    const blog = await BlogModel.findById(id)
-    if(!blog) throw createHttpError.NotFound("بلاگی با مشخصات وارد شده یافت نشد")
-    return blog
-}
-async function checkExistingCourse(id) {
-    const course = await CourseModel.findById(id)
-    if(!course) throw createHttpError.NotFound("دوره ای با مشخصات وارد شده یافت نشد")
-    return course
-}
-async function checkExistingProduct(id) {
-    const product = await ProductModel.findById(id)
-    if(!product) throw createHttpError.NotFound("محصولی با مشخصات وارد شده یافت نشد")
-    return product
 }
 
 async function getComment(model , id){

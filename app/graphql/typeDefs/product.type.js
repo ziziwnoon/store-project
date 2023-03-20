@@ -31,7 +31,10 @@ const ProductType = new GraphQLObjectType({
         discount : {type : GraphQLInt},
         count : {type : GraphQLInt},
         features : {type : featuresType},
-        comments : {type : new GraphQLList(CommentType)}
+        comments : {type : new GraphQLList(CommentType)},
+        likes : {type : new GraphQLList(userType)},
+        dislikes : {type : new GraphQLList(userType)},
+        bookmark : {type : new GraphQLList(userType)},
     }
 })
 

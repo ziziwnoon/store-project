@@ -13,7 +13,10 @@ const CourseResolver = {
         return await CourseModel.find(findQuery).populate([{path :'teacher'} ,
         {path : 'category'},
         {path : 'comments.user'} , 
-        {path : 'comments.answers.user'}])
+        {path : 'comments.answers.user'},
+        {path : 'likes'} , 
+        {path : 'dislikes'} , 
+        {path : 'bookmark'} ,])
     }
 }
 
