@@ -46,7 +46,7 @@ CourseSchema.virtual("imageURL").get(function(){
 CourseSchema.virtual("totalTime").get(function(){
     return getTotalTimeOfCourse(this.chapters)
 })
-
+ 
 
 module.exports = {
     CourseModel : model("course" , CourseSchema)

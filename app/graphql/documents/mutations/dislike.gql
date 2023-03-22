@@ -1,0 +1,10 @@
+# Welcome to Altair GraphQL Client.
+# You can send your request using CmdOrCtrl + Enter.
+
+# Enter your graphQL query here.
+mutation{
+  dislikesForProduct(productID : "635b2a8e71229dd6b4692a2f"){
+   statusCode
+    data
+  }
+}
