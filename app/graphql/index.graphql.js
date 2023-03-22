@@ -2,6 +2,7 @@ const { GraphQLObjectType, GraphQLSchema } = require("graphql");
 const { BlogResolver } = require("./queries/blog.resolver");
 const { CategoryResolver, CategoryChildrenResolver } = require("./queries/category.resolver");
 const { CommentForBlog, CommentForCourse, CommentForProduct } = require("./mutations/comment.resolver");
+const { AddCourseToBasket, AddProductToBasket, RemoveProductFromBasket, RemoveCourseFromBasket} = require("./mutations/basket.resolver");
 const { CourseResolver } = require("./queries/course.resolver");
 const { ProductResolver } = require("./queries/product.resolver");
 const { getUserBlogBookmarks, getUserProductBookmarks, getUserCourseBookmarks } = require("./queries/user-profile.resolver");
@@ -38,7 +39,10 @@ const RootMutation = new GraphQLObjectType({
         BookmarkProduct,
         BookmarkBlog,
         BookmarkCourse,
-
+        AddCourseToBasket,
+        AddProductToBasket,
+        RemoveProductFromBasket,
+        RemoveCourseFromBasket
     }
 })
 

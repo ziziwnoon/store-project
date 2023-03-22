@@ -8,8 +8,8 @@ const CourseSchema = new mongoose.Schema({
     count : { type : Number , default : 1}
 })
 const BasketSchema = new mongoose.Schema({
-    course : { type : [CourseSchema], default : []},
-    product : { type : [ProductSchema], default : []},
+    courses : { type : [CourseSchema], default : []},
+    products : { type : [ProductSchema], default : []},
 })
 const UserSchema = new mongoose.Schema({
     first_name : {type : String},
@@ -23,11 +23,11 @@ const UserSchema = new mongoose.Schema({
     bills : {type : [] , default:[]},
     discount : {type : Number , default : 0},
     birthday : {type:String},
-    basket : {type : BasketSchema},
     otp : {type : Object , default : {
         code : 0,
         expiresin : 0
-    }}
+    }},
+    basket : {type : BasketSchema},
 } , {
     timestamps : true ,
     toJSON : {
