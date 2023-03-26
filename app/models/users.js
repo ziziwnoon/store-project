@@ -20,6 +20,7 @@ const UserSchema = new mongoose.Schema({
     mobile : {type : String, required : true },
     role : {type : String , default: "USER"},
     courses : {type : [mongoose.Types.ObjectId] , ref : "course" , default : []},
+    products : {type : [mongoose.Types.ObjectId] , ref : "product" , default : []},
     bills : {type : [] , default:[]},
     discount : {type : Number , default : 0},
     birthday : {type:String},

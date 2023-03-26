@@ -1,5 +1,5 @@
 const { GraphQLString } = require("graphql");
-const { ResponseType } = require("../typeDefs/public.type");
+const { ResponseType, AnyType } = require("../typeDefs/public.type");
 const {StatusCodes : httpStatus} = require("http-status-codes");
 const { verifyAccesstokenInGraphQL } = require("../../http/middleweares/verifyAccessToken");
 const { checkExistingProduct, checkExistingCourse } = require("../utils");
@@ -52,23 +52,19 @@ const AddCourseToBasket = {
         const user = await verifyAccesstokenInGraphQL(req);
         const {courseID} = args;
         await checkExistingCourse(courseID)
+        const boughtCourse = await UserModel.findOne({_id : user._id , courses : courseID})
+        if(boughtCourse) throw createHttpError.BadRequest("این دوره قبلا خریداری شده است")
         const course = await findCourseInBasket(user._id , courseID)
-        if(course){
-            await UserModel.updateOne({_id : user._id , "basket.courses.courseID" : courseID} , {
-                $inc : {
-                    "basket.courses.$.count" : 1
+        if(course) throw createHttpError.BadRequest("این دوره قبلا به سبد خرید شما اضافه شده است")
+        await UserModel.updateOne({_id : user._id} , {
+            $push : {
+                "basket.courses" : {
+                    courseID ,
+                    count : 1
                 }
-            })
-        } else {
-            await UserModel.updateOne({_id : user._id} , {
-                $push : {
-                    "basket.courses" : {
-                        courseID ,
-                        count : 1
-                    }
-                }
-            })
-        }
+            }
+        })
+
         return {
             statusCode : httpStatus.OK,
             data : {
@@ -129,32 +125,22 @@ const RemoveCourseFromBasket = {
         await checkExistingCourse(courseID)
         const course = await findCourseInBasket(user._id , courseID)
         if(!course) throw createHttpError.NotFound("این دوره در سبد خرید شما وجود ندارد");
-        let message;
-        if(course.count > 1){
-            await UserModel.updateOne({_id : user._id , "basket.courses.courseID" : courseID} , {
-                $inc : {
-                    "basket.courses.$.count" : -1
+        await UserModel.updateOne({_id : user._id , "basket.courses.courseID" : courseID } , {
+            $pull : {
+                "basket.courses" : {
+                    courseID 
                 }
-            })
-            message = "یک عدد از این دوره از سبد خرید شما حذف شد"
-        } else {
-            await UserModel.updateOne({_id : user._id , "basket.courses.courseID" : courseID } , {
-                $pull : {
-                    "basket.courses" : {
-                        courseID 
-                    }
-                }
-            })
-            message = "این دوره از سبد خرید شما حذف شد"
-        }
+            }
+        })
         return {
             statusCode : httpStatus.OK,
             data : {
-                message
+                message : "این دوره از سبد خرید شما حذف شد"
             }
         }
     }
 }
+
 
 async function findProductInBasket(userID , productID){
     const productInBasket = await UserModel.findOne({_id : userID , "basket.products.productID" : productID} ,{"basket.products.$": 1})

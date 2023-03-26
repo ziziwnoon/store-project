@@ -6,6 +6,9 @@ const { CourseModel } = require("../../models/course");
 const { BlogType } = require("../typeDefs/blog.type");
 const { CourseType } = require("../typeDefs/course.type");
 const { ProductType } = require("../typeDefs/product.type");
+const { AnyType } = require("../typeDefs/public.type");
+const { UserModel } = require("../../models/users");
+const { getBasketOfUser } = require("../../utils/functions");
 
 const getUserBlogBookmarks = {
     type : new GraphQLList(BlogType),
@@ -50,8 +53,20 @@ const getUserCourseBookmarks = {
     }
 }
 
+const getUserBasket = {
+    type : AnyType,
+    resolve : async(_, args, context) => {
+        const {req} = context;
+        const user = await verifyAccesstokenInGraphQL(req);
+
+        const userDetail = getBasketOfUser(user._id)
+        return userDetail
+    }
+}
+
 module.exports = {
     getUserBlogBookmarks,
     getUserProductBookmarks,
-    getUserCourseBookmarks
+    getUserCourseBookmarks,
+    getUserBasket
 }
