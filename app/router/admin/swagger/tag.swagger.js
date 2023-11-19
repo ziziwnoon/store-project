@@ -19,4 +19,6 @@
  *      description: Users managment
  *  -   name: RBAC(AdminPanel)
  *      description: RoleBaseAccessControll system , create and edit permissions
+ *  -   name: Transaction(AdminPanel)
+ *      description: Transactions of products and courses
  */

@@ -9,6 +9,7 @@ const { adminEpisodeRoutes } = require("./episode");
 const { adminPermissionRoutes } = require("./permission");
 const { adminProductRoutes } = require("./product");
 const { adminRoleRoutes } = require("./role");
+const { adminTransactionRoutes } = require("./transaction");
 const { adminUserRoutes } = require("./user");
 
 const router = require("express").Router();
@@ -26,6 +27,7 @@ router.use("/episode" , checkRole([PERMISSION.TEACHER]), adminEpisodeRoutes)
 router.use("/user" , adminUserRoutes)
 router.use("/role" , checkRole([PERMISSION.ADMIN]), adminRoleRoutes)
 router.use("/permission" , adminPermissionRoutes)
+router.use("/transaction" , adminTransactionRoutes)
 
 module.exports = {
     AdminRoutes : router
